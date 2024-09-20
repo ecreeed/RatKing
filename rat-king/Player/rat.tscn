@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcn5gp8ueibjo"]
+
+[ext_resource type="Texture2D" uid="uid://dkyj3sbrdmw5v" path="res://Player/Rat.png" id="1_6vvjs"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3xjdu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6vvjs")
+}],
+"loop": true,
+"name": &"rat",
+"speed": 5.0
+}]
+
+[node name="Rat" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_3xjdu")
+animation = &"rat"
+offset = Vector2(7, -7)
