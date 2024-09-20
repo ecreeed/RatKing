@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://qivxa54olutt"]
+[gd_scene load_steps=4 format=3 uid="uid://qivxa54olutt"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_2rh3y"]
+[ext_resource type="PackedScene" uid="uid://bixxrecohaied" path="res://Player/Gun/gun.tscn" id="2_q0ynm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ay2i0"]
-radius = 86.0058
+radius = 48.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_2rh3y")
@@ -13,3 +14,8 @@ scale = Vector2(2, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ay2i0")
+
+[node name="Aim" type="Node2D" parent="."]
+
+[node name="Gun" parent="Aim" instance=ExtResource("2_q0ynm")]
+position = Vector2(86, 0)

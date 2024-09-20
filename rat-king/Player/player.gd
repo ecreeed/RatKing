@@ -2,18 +2,24 @@ class_name Player
 extends CharacterBody2D
 
 const speed = 1000
+var cheese = 0
 
 @onready var art = $Art
+@onready var aim = $Aim
+@onready var gun : Gun = $Aim/Gun
 
 
 func _ready() -> void:
 	add_rat()
 
 func _physics_process(delta: float) -> void:
+	aim_gun()
 	movement(delta)
 	spin()
 	if Input.is_action_just_pressed("left_click"):
-		add_rat()
+		gun.shoot()
+	if Input.is_action_just_pressed("reload"):
+		gun.do_reload()
 
 func movement(delta: float) -> void:
 	var acc = Vector2(0,0)
@@ -50,3 +56,12 @@ func add_rat() -> void:
 	new_rat.rotate(randi_range(0,360))
 	art.add_child(new_rat)
 	get_tree().create_tween().tween_property(new_rat,"modulate:a",1,0.5)
+
+func aim_gun() -> void:
+	aim.look_at(get_global_mouse_position())
+	aim.rotation_degrees -= 90
+	if aim.global_rotation_degrees > 0:
+		gun.flip(true)
+	else:
+		gun.flip(false)
+	aim.rotation_degrees += 90

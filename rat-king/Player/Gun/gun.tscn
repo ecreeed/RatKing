@@ -1,0 +1,114 @@
+[gd_scene load_steps=13 format=3 uid="uid://bixxrecohaied"]
+
+[ext_resource type="Script" path="res://Player/Gun/gun.gd" id="1_enmql"]
+[ext_resource type="Texture2D" uid="uid://bi7x4r6tp3e4t" path="res://Player/Gun/gun-Sheet.png" id="1_wa5im"]
+[ext_resource type="Texture2D" uid="uid://toi64ddt0wr5" path="res://Player/Gun/lever.png" id="3_lvvom"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="4_qf36p"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_38hfa"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_6uxvg"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_nlxo8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nxvb1"]
+atlas = ExtResource("1_wa5im")
+region = Rect2(32, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qovby"]
+atlas = ExtResource("1_wa5im")
+region = Rect2(64, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v41ys"]
+atlas = ExtResource("1_wa5im")
+region = Rect2(96, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbtpu"]
+atlas = ExtResource("1_wa5im")
+region = Rect2(0, 0, 32, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0rnro"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nxvb1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qovby")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v41ys")
+}],
+"loop": false,
+"name": &"fire",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vbtpu")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Gun" type="AnimatedSprite2D"]
+z_index = 1
+position = Vector2(0, -4)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_0rnro")
+animation = &"fire"
+frame = 2
+frame_progress = 1.0
+flip_h = true
+script = ExtResource("1_enmql")
+
+[node name="Lever" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(0, 2)
+texture = ExtResource("3_lvvom")
+centered = false
+offset = Vector2(-5, 0)
+flip_h = true
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("4_qf36p")
+
+[node name="root" type="Node" parent="StateChart"]
+script = ExtResource("5_38hfa")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/root"]
+script = ExtResource("6_6uxvg")
+
+[node name="to_fire" type="Node" parent="StateChart/root/Idle"]
+script = ExtResource("7_nlxo8")
+to = NodePath("../../Fire")
+event = &"shoot"
+delay_in_seconds = "0.0"
+
+[node name="to_reload" type="Node" parent="StateChart/root/Idle"]
+script = ExtResource("7_nlxo8")
+to = NodePath("../../Reload")
+event = &"reload"
+delay_in_seconds = "0.0"
+
+[node name="Fire" type="Node" parent="StateChart/root"]
+script = ExtResource("6_6uxvg")
+
+[node name="to_idle" type="Node" parent="StateChart/root/Fire"]
+script = ExtResource("7_nlxo8")
+to = NodePath("../../Idle")
+event = &"ani_done"
+delay_in_seconds = "0.0"
+
+[node name="Reload" type="Node" parent="StateChart/root"]
+script = ExtResource("6_6uxvg")
+
+[node name="to_idle" type="Node" parent="StateChart/root/Reload"]
+script = ExtResource("7_nlxo8")
+to = NodePath("../../Idle")
+event = &"reloaded"
+delay_in_seconds = "0.0"
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
+[connection signal="state_entered" from="StateChart/root/Idle" to="." method="_on_idle_state_entered"]
+[connection signal="state_entered" from="StateChart/root/Fire" to="." method="_on_fire_state_entered"]
+[connection signal="state_entered" from="StateChart/root/Reload" to="." method="_on_reload_state_entered"]
