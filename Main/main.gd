@@ -28,7 +28,7 @@ func _ready() -> void:
 	cheese_bar.max_value = 5
 	cheese_lvl.text = "1"
 	pause_menu.battle = self
-
+	$Death.visible = false
 
 func _physics_process(delta: float) -> void:
 	set_camera(delta)
@@ -61,7 +61,7 @@ func set_HP(new_val: int) -> void:
 func _on_timer_timeout() -> void:
 	time_cnt.text = str(int(time_cnt.text) + 1)
 	if int(time_cnt.text) % interval == 0:
-		spawn_enemy(int(time_cnt.text)/15 + 1,int(time_cnt.text)/120 + 1)
+		spawn_enemy(int(time_cnt.text)/30 + 1,int(time_cnt.text)/200 + 1)
 	elif int(time_cnt.text) % 2 == 0:
 		spawn_cheese(player.global_position + Vector2(1000,0).rotated(randi_range(0,360)))
 
@@ -85,3 +85,14 @@ func spawn_cheese(pos: Vector2, level: int=1) -> void:
 func pause(on: bool) -> void:
 	pause_menu.visible = on
 	get_tree().paused = on
+
+
+func death() -> void:
+	get_tree().paused = true
+	$Death.visible = true
+	$Death/Score.text = str(int(time_cnt.text) * player.rats)
+	
+
+
+func _on_menu_pressed() -> void:
+	sys.change_scene("res://Menus/home.tscn")

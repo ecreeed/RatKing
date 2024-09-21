@@ -165,4 +165,69 @@ autostart = true
 process_mode = 3
 visible = false
 
+[node name="Death" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 3
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Death"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.2, 0.2, 0.2, 0.8)
+
+[node name="Score" type="Label" parent="Death"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -282.0
+offset_top = -94.5
+offset_right = 282.0
+offset_bottom = 94.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_gu3nk")
+theme_override_colors/font_color = Color(0.870588, 0.580392, 0, 1)
+theme_override_font_sizes/font_size = 64
+text = "100,000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Death" type="Label" parent="Death"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -282.0
+offset_right = 282.0
+offset_bottom = 243.0
+grow_horizontal = 2
+theme = ExtResource("3_gu3nk")
+theme_override_font_sizes/font_size = 64
+text = "You Died!
+
+Score:"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Menu" type="Button" parent="Death"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -101.0
+offset_top = -196.0
+offset_right = 87.0
+offset_bottom = -140.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_gu3nk")
+theme_override_font_sizes/font_size = 64
+text = "Menu"
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="Death/Menu" to="." method="_on_menu_pressed"]

@@ -83,6 +83,8 @@ func take_dmg(dmg: int) -> void:
 	var flash = get_tree().create_tween()
 	flash.tween_property(art,"modulate",Color.RED,0.2)
 	flash.tween_property(art,"modulate",Color.WHITE,0.2)
+	if HP <= 0:
+		battle.death()
 
 func add_cheese(cheese_lvl: int) -> void:
 	if randi_range(0,100) < regen and HP < Max_HP:

@@ -23,7 +23,7 @@ func _physics_process(delta: float) -> void:
 
 func init(diff: int) -> void:
 	HP = diff
-	speed = 8000 + 1500 * diff
+	speed = 8000 + 3000 * diff
 	dmg = diff
 	modulate = Color(0,0,0,0)
 
