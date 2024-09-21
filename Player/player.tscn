@@ -17,5 +17,6 @@ shape = SubResource("CircleShape2D_ay2i0")
 
 [node name="Aim" type="Node2D" parent="."]
 
-[node name="Gun" parent="Aim" instance=ExtResource("2_q0ynm")]
+[node name="Gun" parent="Aim" node_paths=PackedStringArray("player") instance=ExtResource("2_q0ynm")]
 position = Vector2(86, 0)
+player = NodePath("../..")

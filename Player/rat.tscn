@@ -1,19 +1,119 @@
-[gd_scene load_steps=3 format=3 uid="uid://dcn5gp8ueibjo"]
+[gd_scene load_steps=12 format=3 uid="uid://dcn5gp8ueibjo"]
 
 [ext_resource type="Texture2D" uid="uid://dkyj3sbrdmw5v" path="res://Player/Rat.png" id="1_6vvjs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1rg7"]
+atlas = ExtResource("1_6vvjs")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwppo"]
+atlas = ExtResource("1_6vvjs")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gw20"]
+atlas = ExtResource("1_6vvjs")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_owxoe"]
+atlas = ExtResource("1_6vvjs")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gcx8"]
+atlas = ExtResource("1_6vvjs")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lcji7"]
+atlas = ExtResource("1_6vvjs")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_esmo2"]
+atlas = ExtResource("1_6vvjs")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5go5"]
+atlas = ExtResource("1_6vvjs")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3sfg2"]
+atlas = ExtResource("1_6vvjs")
+region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3xjdu"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_6vvjs")
+"texture": SubResource("AtlasTexture_x1rg7")
+}],
+"loop": true,
+"name": &"beaver",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwppo")
+}],
+"loop": true,
+"name": &"capybara",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7gw20")
+}],
+"loop": true,
+"name": &"chinchilla",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owxoe")
+}],
+"loop": true,
+"name": &"chipmunk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5gcx8")
+}],
+"loop": true,
+"name": &"ferret",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lcji7")
+}],
+"loop": true,
+"name": &"mouse",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_esmo2")
+}],
+"loop": true,
+"name": &"porcupine",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p5go5")
 }],
 "loop": true,
 "name": &"rat",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3sfg2")
+}],
+"loop": true,
+"name": &"squirrel",
 "speed": 5.0
 }]
 
 [node name="Rat" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_3xjdu")
-animation = &"rat"
+animation = &"squirrel"
 offset = Vector2(7, -7)

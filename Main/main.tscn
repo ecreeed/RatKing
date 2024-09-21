@@ -1,7 +1,37 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2dt7mxbvcbmj"]
+[gd_scene load_steps=13 format=3 uid="uid://d2dt7mxbvcbmj"]
 
 [ext_resource type="Script" path="res://Main/main.gd" id="1_va4l3"]
 [ext_resource type="PackedScene" uid="uid://qivxa54olutt" path="res://Player/player.tscn" id="2_54lp2"]
+[ext_resource type="Theme" uid="uid://mn84i2hymhmy" path="res://UI/Main.tres" id="3_gu3nk"]
+[ext_resource type="Texture2D" uid="uid://c6rixjddqx2xm" path="res://Cheese/cheese.png" id="4_0tkdb"]
+
+[sub_resource type="Gradient" id="Gradient_khaec"]
+offsets = PackedFloat32Array(0, 0.844156)
+colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 0.803922)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1gg8g"]
+gradient = SubResource("Gradient_khaec")
+width = 1152
+height = 648
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8xx0p"]
+bg_color = Color(0.6, 0.512, 0.336, 0.560784)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fp25k"]
+bg_color = Color(0.870588, 0.580392, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kxy20"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7koj"]
+bg_color = Color(0.87, 0.87, 0.87, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6qr53"]
+bg_color = Color(0.97, 0.55678, 0.2813, 0.2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_14wer"]
+bg_color = Color(0.996078, 0.905882, 0.380392, 1)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_va4l3")
@@ -9,3 +39,124 @@ script = ExtResource("1_va4l3")
 [node name="Player" parent="." instance=ExtResource("2_54lp2")]
 
 [node name="Camera" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="Vingette" type="TextureRect" parent="Canvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_1gg8g")
+
+[node name="Health" type="Label" parent="Canvas"]
+offset_left = 945.0
+offset_right = 1152.0
+offset_bottom = 118.0
+pivot_offset = Vector2(102, 61)
+size_flags_vertical = 3
+theme = ExtResource("3_gu3nk")
+theme_override_colors/font_color = Color(0.91, 0.32032, 0.2548, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 32
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Time" type="Label" parent="Canvas"]
+offset_right = 207.0
+offset_bottom = 118.0
+pivot_offset = Vector2(102, 61)
+size_flags_vertical = 3
+theme = ExtResource("3_gu3nk")
+theme_override_colors/font_color = Color(0.84, 0.84, 0.84, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Mag" type="HBoxContainer" parent="Canvas"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -78.0
+offset_top = -272.0
+offset_right = -25.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Ammo" type="ProgressBar" parent="Canvas/Mag"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_8xx0p")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fp25k")
+value = 50.0
+fill_mode = 3
+show_percentage = false
+
+[node name="Reload" type="ProgressBar" parent="Canvas/Mag"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.57
+theme_override_styles/background = SubResource("StyleBoxEmpty_kxy20")
+theme_override_styles/fill = SubResource("StyleBoxFlat_n7koj")
+value = 50.0
+fill_mode = 3
+show_percentage = false
+
+[node name="Cheese" type="HBoxContainer" parent="Canvas"]
+custom_minimum_size = Vector2(0, 50)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -195.0
+offset_top = 35.0
+offset_right = 195.0
+offset_bottom = 85.0
+grow_horizontal = 2
+
+[node name="Icon" type="TextureRect" parent="Canvas/Cheese"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("4_0tkdb")
+
+[node name="Amount" type="ProgressBar" parent="Canvas/Cheese"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_6qr53")
+theme_override_styles/fill = SubResource("StyleBoxFlat_14wer")
+value = 50.0
+show_percentage = false
+
+[node name="Level" type="Label" parent="Canvas/Cheese"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("3_gu3nk")
+theme_override_colors/font_color = Color(0.996078, 0.905882, 0.380392, 1)
+theme_override_colors/font_outline_color = Color(0.968627, 0.462745, 0.133333, 1)
+theme_override_constants/outline_size = 3
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

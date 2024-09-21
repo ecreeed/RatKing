@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://mn84i2hymhmy"]
+
+[ext_resource type="FontFile" uid="uid://coqvhrp6k534u" path="res://UI/GravityBold8.ttf" id="1_ahu84"]
+
+[resource]
+default_font = ExtResource("1_ahu84")
+Label/font_sizes/font_size = 16
