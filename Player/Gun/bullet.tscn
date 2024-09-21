@@ -1,32 +1,43 @@
-[gd_scene load_steps=5 format=3 uid="uid://bdssbpm8jwsrf"]
+[gd_scene load_steps=6 format=3 uid="uid://bdssbpm8jwsrf"]
 
 [ext_resource type="Texture2D" uid="uid://dkyj3sbrdmw5v" path="res://Player/Rat.png" id="1_iqe3s"]
 [ext_resource type="Script" path="res://Player/Gun/bullet.gd" id="1_v5ejl"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jglcc"]
-radius = 7.0
-height = 24.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5784u"]
 atlas = ExtResource("1_iqe3s")
 region = Rect2(0, 0, 16, 16)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ywfbw"]
+radius = 2.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jxqv2"]
+radius = 6.0
+height = 24.0
+
 [node name="Bullet" type="RigidBody2D"]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 0
 mass = 0.001
 gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_v5ejl")
 
-[node name="Hitbox" type="CollisionShape2D" parent="."]
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_jglcc")
-
 [node name="Sprite" type="Sprite2D" parent="."]
 modulate = Color(0.226707, 0.226707, 0.226707, 1)
 rotation = 0.785398
 texture = SubResource("AtlasTexture_5784u")
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CircleShape2D_ywfbw")
+
+[node name="Dmg" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dmg"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_jxqv2")
+
+[connection signal="body_entered" from="Dmg" to="." method="_on_dmg_body_entered"]

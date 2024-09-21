@@ -101,7 +101,6 @@ func add_cheese(cheese_lvl: int) -> void:
 func level_up() -> void:
 	rats += 1
 	var upgrade = rodents[randi_range(0,rodents.size()-1)]
-	print(upgrade)
 	match upgrade:
 		"rat":
 			gun.dmg += 1
@@ -123,8 +122,16 @@ func level_up() -> void:
 			regen += 5
 		"ferret":
 			gun.ammo_cap += 1
+			battle.ammo_bar.max_value = gun.ammo_cap
 	
 	if HP < Max_HP:
 		HP += 1
 		battle.set_HP(HP)
 	add_rat(upgrade)
+	
+	var popup = preload("res://UI/popup.tscn").instantiate()
+	popup.rodent = upgrade
+	popup.position = Vector2(250,0).rotated(randi_range(0,360))
+	add_child(popup)
+	if rats % 10 == 0 and battle.interval > 1:
+		battle.interval -= 1

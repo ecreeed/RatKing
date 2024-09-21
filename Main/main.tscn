@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://d2dt7mxbvcbmj"]
+[gd_scene load_steps=14 format=3 uid="uid://d2dt7mxbvcbmj"]
 
 [ext_resource type="Script" path="res://Main/main.gd" id="1_va4l3"]
 [ext_resource type="PackedScene" uid="uid://qivxa54olutt" path="res://Player/player.tscn" id="2_54lp2"]
 [ext_resource type="Theme" uid="uid://mn84i2hymhmy" path="res://UI/Main.tres" id="3_gu3nk"]
 [ext_resource type="Texture2D" uid="uid://c6rixjddqx2xm" path="res://Cheese/cheese.png" id="4_0tkdb"]
+[ext_resource type="PackedScene" uid="uid://bfd5i32dqiev1" path="res://Menus/pause.tscn" id="5_r0tak"]
 
 [sub_resource type="Gradient" id="Gradient_khaec"]
 offsets = PackedFloat32Array(0, 0.844156)
@@ -37,6 +38,7 @@ bg_color = Color(0.996078, 0.905882, 0.380392, 1)
 script = ExtResource("1_va4l3")
 
 [node name="Player" parent="." instance=ExtResource("2_54lp2")]
+position = Vector2(553, 320)
 
 [node name="Camera" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
@@ -158,5 +160,9 @@ vertical_alignment = 1
 [node name="Timer" type="Timer" parent="."]
 process_callback = 0
 autostart = true
+
+[node name="Pause" parent="." instance=ExtResource("5_r0tak")]
+process_mode = 3
+visible = false
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

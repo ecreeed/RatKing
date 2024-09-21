@@ -6,6 +6,9 @@ var rng : int = 800
 var distance : float = 0
 var dmg : int = 1
 
+func _ready() -> void:
+	max_contacts_reported = dmg
+
 func _physics_process(delta: float) -> void:
 	distance += speed*delta
 	if distance > rng:
@@ -15,7 +18,9 @@ func _physics_process(delta: float) -> void:
 
 
 
-func _on_body_entered(body: Node) -> void:
+func _on_dmg_body_entered(body: Node) -> void:
 	if body is Cat:
-		body.take_dmg(dmg)
+		dmg = body.take_dmg(dmg)
+		if dmg <= 0:
+			queue_free()
 	

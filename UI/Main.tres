@@ -4,4 +4,5 @@
 
 [resource]
 default_font = ExtResource("1_ahu84")
+Button/font_sizes/font_size = 48
 Label/font_sizes/font_size = 16

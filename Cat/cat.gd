@@ -42,7 +42,7 @@ func chase(delta: float) -> void:
 
 func _on_attack_body_entered(body: Node2D) -> void:
 	if body is Player:
-		body.take_dmg(dmg)
+		body.take_dmg(1)
 		die()
 
 
@@ -53,14 +53,16 @@ func die() -> void:
 	speed = 0
 	anim.play("explosion")
 
-func take_dmg(lcl_dmg: int) -> void:
+func take_dmg(lcl_dmg: int) -> int:
 	if dead:
-		return
+		return lcl_dmg
 	var flash = get_tree().create_tween()
 	flash.tween_property(anim,"modulate",Color.RED,0.2)
 	flash.tween_property(anim,"modulate",Color.WHITE,0.2)
+	var output = lcl_dmg - HP
 	HP -= lcl_dmg
 	if HP <= 0:
 		dead = true
 		battle.spawn_cheese(global_position,dmg)
 		die()
+	return output

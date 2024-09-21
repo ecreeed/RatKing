@@ -2,6 +2,9 @@ class_name Main
 extends Node2D
 
 const cam_speed = 5
+var interval = 5
+
+var sys : System
 
 @onready var camera : Camera2D = $Camera
 @onready var player : Player = $Player
@@ -12,6 +15,7 @@ const cam_speed = 5
 @onready var timer : Timer = $Timer
 @onready var cheese_bar : ProgressBar = $Canvas/Cheese/Amount
 @onready var cheese_lvl : Label = $Canvas/Cheese/Level
+@onready var pause_menu : PauseMenu = $Pause
 
 
 func _ready() -> void:
@@ -23,10 +27,13 @@ func _ready() -> void:
 	cheese_bar.value = 0
 	cheese_bar.max_value = 5
 	cheese_lvl.text = "1"
+	pause_menu.battle = self
 
 
 func _physics_process(delta: float) -> void:
 	set_camera(delta)
+	if Input.is_action_just_pressed("pause"):
+		pause(true)
 
 
 func set_camera(delta: float) -> void:
@@ -53,8 +60,8 @@ func set_HP(new_val: int) -> void:
 
 func _on_timer_timeout() -> void:
 	time_cnt.text = str(int(time_cnt.text) + 1)
-	if int(time_cnt.text) % 5 == 0:
-		spawn_enemy(int(time_cnt.text)/30 + 1,int(time_cnt.text)/120 + 1)
+	if int(time_cnt.text) % interval == 0:
+		spawn_enemy(int(time_cnt.text)/15 + 1,int(time_cnt.text)/120 + 1)
 	elif int(time_cnt.text) % 2 == 0:
 		spawn_cheese(player.global_position + Vector2(1000,0).rotated(randi_range(0,360)))
 
@@ -74,3 +81,7 @@ func spawn_cheese(pos: Vector2, level: int=1) -> void:
 	new_cheese.global_position = pos
 	new_cheese.level = level
 	call_deferred("add_child",new_cheese)
+
+func pause(on: bool) -> void:
+	pause_menu.visible = on
+	get_tree().paused = on
