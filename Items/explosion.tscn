@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://dj1l3vgp5g1hp"]
+[gd_scene load_steps=13 format=3 uid="uid://dj1l3vgp5g1hp"]
 
 [ext_resource type="Texture2D" uid="uid://bmxgotyjd4k6r" path="res://Items/boom-Sheet.png" id="1_goab0"]
 [ext_resource type="Script" path="res://Items/explosion.gd" id="1_yaql1"]
+[ext_resource type="AudioStream" uid="uid://dhquk0mhlctpl" path="res://Audio/grenade.mp3" id="3_i43cy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_up0il"]
 atlas = ExtResource("1_goab0")
@@ -64,6 +65,7 @@ animations = [{
 radius = 178.025
 
 [node name="Explosion" type="Area2D"]
+scale = Vector2(1.2, 1.2)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_yaql1")
@@ -78,5 +80,11 @@ frame_progress = 1.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_hbpg8")
 
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_i43cy")
+volume_db = 5.0
+autoplay = true
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="Animation" to="." method="_on_animation_animation_finished"]
+[connection signal="finished" from="Audio" to="." method="_on_audio_finished"]

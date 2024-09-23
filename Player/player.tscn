@@ -1,7 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://qivxa54olutt"]
+[gd_scene load_steps=10 format=3 uid="uid://qivxa54olutt"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_2rh3y"]
 [ext_resource type="PackedScene" uid="uid://bixxrecohaied" path="res://Player/Gun/gun.tscn" id="2_q0ynm"]
+[ext_resource type="AudioStream" uid="uid://cvwyvj2cw8iv5" path="res://Audio/level.mp3" id="3_xtnh3"]
+[ext_resource type="AudioStream" uid="uid://bb4t1nee4a5s4" path="res://Audio/hurt.mp3" id="4_s3ute"]
+[ext_resource type="AudioStream" uid="uid://rhcthy0ip7n5" path="res://Audio/pickup.mp3" id="5_i23el"]
+[ext_resource type="AudioStream" uid="uid://t3fr1m6kvek2" path="res://Audio/gulp.mp3" id="6_h8hy6"]
+[ext_resource type="AudioStream" uid="uid://b1sqwxq6p6ksa" path="res://Audio/fart.mp3" id="7_t0gda"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ay2i0"]
 radius = 48.0
@@ -37,5 +42,28 @@ shape = SubResource("CircleShape2D_jot17")
 process_callback = 0
 wait_time = 10.0
 one_shot = true
+
+[node name="Ear" type="AudioListener2D" parent="."]
+current = true
+
+[node name="Level" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_xtnh3")
+volume_db = -7.0
+
+[node name="Hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_s3ute")
+volume_db = -2.0
+
+[node name="Grab" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_i23el")
+volume_db = -2.0
+
+[node name="Eat" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_h8hy6")
+volume_db = 2.0
+
+[node name="Fart" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_t0gda")
+volume_db = 5.0
 
 [connection signal="timeout" from="ItmTimer" to="." method="_on_itm_timer_timeout"]

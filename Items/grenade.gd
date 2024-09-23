@@ -2,8 +2,8 @@ class_name Grenade
 extends RigidBody2D
 
 
-var speed : int = 1000
-var rng : int = 500
+var speed : int = 900
+var rng : int = 700
 var distance : float = 0
 var dmg : int = 1
 

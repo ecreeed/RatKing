@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://bqan71txmrv0q"]
+[gd_scene load_steps=17 format=3 uid="uid://bqan71txmrv0q"]
 
 [ext_resource type="Texture2D" uid="uid://xhxikiikvgv" path="res://Cat/Cat-Sheet.png" id="1_1bbxt"]
 [ext_resource type="Script" path="res://Cat/cat.gd" id="1_tidhb"]
 [ext_resource type="Texture2D" uid="uid://dijr5tjn8fal7" path="res://Cat/explosion-Sheet.png" id="2_4ep3u"]
+[ext_resource type="AudioStream" uid="uid://bk3mi8d3q04dg" path="res://Audio/death.mp3" id="4_7l72k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_23ojw"]
 atlas = ExtResource("2_4ep3u")
@@ -117,6 +118,11 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attack"]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_vbi2b")
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_7l72k")
+volume_db = -1.0
+pitch_scale = 1.5
 
 [connection signal="animation_finished" from="Animation" to="." method="_on_animation_animation_finished"]
 [connection signal="body_entered" from="Attack" to="." method="_on_attack_body_entered"]

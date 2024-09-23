@@ -53,6 +53,7 @@ func die() -> void:
 	$hitbox.scale *= 0
 	$Attack.scale *= 0
 	speed = 0
+	$Audio.play()
 	anim.play("explosion")
 
 func take_dmg(lcl_dmg: int) -> int:

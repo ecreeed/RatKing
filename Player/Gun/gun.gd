@@ -61,6 +61,7 @@ func _on_fire_state_entered() -> void:
 	ammo -= (1 - int(endless))
 	player.battle.set_ammo(ammo)
 	play("fire")
+	$Gunshot.play()
 	do_bullet()
 	await get_tree().create_timer(fire_speed).timeout
 	can_fire = true
@@ -70,6 +71,7 @@ func _on_reload_state_entered() -> void:
 	ammo += reload_amount
 	if ammo > ammo_cap:
 		ammo = ammo_cap
+	$Reload.play()
 	player.battle.reload_ammo(ammo,reload_speed)
 	var lod = get_tree().create_tween()
 	lod.tween_property(lever,"rotation_degrees",rl_pos,reload_speed/2)

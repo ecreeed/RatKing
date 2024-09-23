@@ -90,6 +90,7 @@ func take_dmg(dmg: int) -> void:
 	if held_item == "mushroom" and item_active:
 		return
 	HP -= dmg
+	$Hurt.play()
 	battle.set_HP(HP)
 	var flash = get_tree().create_tween()
 	flash.tween_property(art,"modulate",Color.RED,0.2)
@@ -114,6 +115,7 @@ func add_cheese(cheese_lvl: int) -> void:
 
 func level_up() -> void:
 	rats += 1
+	$Level.play()
 	var upgrade = rodents[randi_range(0,rodents.size()-1)]
 	match upgrade:
 		"rat":
@@ -155,6 +157,7 @@ func level_up() -> void:
 		battle.cheese_lvl.text = str(rats)
 
 func pickup(type) -> void:
+	$Grab.play()
 	held_item = type
 	battle.display_item()
 
@@ -165,6 +168,8 @@ func activate_item() -> void:
 	if held_item != "":
 		item_active = true
 		battle.itemheld.modulate = Color.DIM_GRAY
+		if held_item != "grenade":
+			$Eat.play()
 
 	match held_item:
 		"cracker":
@@ -179,6 +184,7 @@ func activate_item() -> void:
 			throw_grenade()
 
 func _on_itm_timer_timeout() -> void:
+	$Fart.play()
 	match held_item:
 		"cracker":
 			gain_mod = 1
