@@ -90,7 +90,10 @@ func pause(on: bool) -> void:
 func death() -> void:
 	get_tree().paused = true
 	$Death.visible = true
-	$Death/Score.text = str(int(time_cnt.text) * player.rats)
+	var score : int = int(time_cnt.text) * player.rats
+	if player.rats >= 50:
+		score += player.cheese
+	$Death/Score.text = str(score)
 	
 
 

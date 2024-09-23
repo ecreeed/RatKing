@@ -92,13 +92,14 @@ func add_cheese(cheese_lvl: int) -> void:
 		battle.set_HP(HP)
 
 	cheese += gain_mod*cheese_lvl
-	if cheese >= rats*5:
-		cheese -= rats*5
-		level_up()
-	get_tree().create_tween().tween_property(battle.cheese_bar,"value",cheese,0.1)
-	battle.cheese_bar.max_value = rats*5
-	battle.cheese_lvl.text = str(rats)
-
+	if rats < 50:
+		if cheese >= rats*5:
+			cheese -= rats*5
+			level_up()
+		if rats < 50:
+			get_tree().create_tween().tween_property(battle.cheese_bar,"value",cheese,0.1)
+		else:
+			battle.cheese_bar.value = battle.cheese_bar.max_value
 
 func level_up() -> void:
 	rats += 1
@@ -135,5 +136,9 @@ func level_up() -> void:
 	popup.rodent = upgrade
 	popup.position = Vector2(250,0).rotated(randi_range(0,360))
 	add_child(popup)
-	if rats % 10 == 0 and battle.interval > 1:
+	if rats % 15 == 0 and battle.interval > 1:
 		battle.interval -= 1
+	
+	if rats <= 50:
+		battle.cheese_bar.max_value = rats*5
+		battle.cheese_lvl.text = str(rats)
