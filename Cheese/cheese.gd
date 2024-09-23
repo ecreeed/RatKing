@@ -13,10 +13,11 @@ func _ready() -> void:
 	if g < 0: g = 0
 	$Sprite.modulate = Color(r,g,1)
 
-func _on_body_entered(body: Node2D) -> void:
-	if body is Player and gett:
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.get_parent() is Player and gett:
 		gett = false
-		body.add_cheese(level)
+		area.get_parent().add_cheese(level)
 		var fade = get_tree().create_tween()
 		fade.tween_property(self,"modulate:a",0,0.25)
 		await fade.finished

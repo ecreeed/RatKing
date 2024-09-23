@@ -7,7 +7,7 @@ const info : Dictionary = {
 	"rat": "+ DMG",
 	"capybara" : "+ HP",
 	"porcupine" : "+ Bullet",
-	"chipmunk" : "+ Cheese",
+	"chipmunk" : "+ Pickup",
 	"beaver" : "+ Reload",
 	"mouse" : "+ Rate",
 	"chinchilla" : "+ Speed",

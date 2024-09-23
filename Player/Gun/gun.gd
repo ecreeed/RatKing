@@ -7,6 +7,7 @@ extends AnimatedSprite2D
 @export var player : Player
 var rl_pos = 70
 var can_fire = true
+var endless = false
 
 var ammo_cap : int = 8
 var ammo : int = 8
@@ -57,7 +58,7 @@ func _on_animation_finished() -> void:
 
 func _on_fire_state_entered() -> void:
 	can_fire = false
-	ammo -= 1
+	ammo -= (1 - int(endless))
 	player.battle.set_ammo(ammo)
 	play("fire")
 	do_bullet()

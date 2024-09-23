@@ -11,9 +11,13 @@ var Max_HP = 10
 var HP = 10
 var regen = 0
 
+var held_item : String = ""
+var item_active : bool = false
+
 @onready var art = $Art
 @onready var aim = $Aim
 @onready var gun : Gun = $Aim/Gun
+@onready var timer: Timer = $ItmTimer
 
 @onready var battle : Main
 
@@ -29,6 +33,11 @@ func _physics_process(delta: float) -> void:
 		gun.shoot()
 	if Input.is_action_pressed("reload"):
 		gun.do_reload()
+	if Input.is_action_just_pressed("item"):
+		activate_item()
+	if Input.is_action_just_pressed("discard") and !item_active:
+		held_item = ""
+		battle.display_item()
 
 func movement(delta: float) -> void:
 	var acc = Vector2(0,0)
@@ -78,6 +87,8 @@ func aim_gun() -> void:
 	aim.rotation_degrees += 90
 
 func take_dmg(dmg: int) -> void:
+	if held_item == "mushroom" and item_active:
+		return
 	HP -= dmg
 	battle.set_HP(HP)
 	var flash = get_tree().create_tween()
@@ -114,7 +125,7 @@ func level_up() -> void:
 		"porcupine":
 			gun.pjtl_cnt += 1
 		"chipmunk":
-			gain_mod += 1
+			$Pickup.scale += Vector2(1.2,1.2)
 		"beaver":
 			gun.reload_amount += 1
 		"mouse":
@@ -142,3 +153,51 @@ func level_up() -> void:
 	if rats <= 50:
 		battle.cheese_bar.max_value = rats*5
 		battle.cheese_lvl.text = str(rats)
+
+func pickup(type) -> void:
+	held_item = type
+	battle.display_item()
+
+func activate_item() -> void:
+	if item_active:
+		return
+
+	if held_item != "":
+		item_active = true
+		battle.itemheld.modulate = Color.DIM_GRAY
+
+	match held_item:
+		"cracker":
+			gain_mod = 5
+			timer.start()
+		"ammo":
+			gun.endless = true
+			timer.start()
+		"mushroom":
+			timer.start()
+		"grenade":
+			throw_grenade()
+
+func _on_itm_timer_timeout() -> void:
+	match held_item:
+		"cracker":
+			gain_mod = 1
+		"ammo":
+			gun.endless = false
+	
+	battle.itemheld.modulate = Color.WHITE
+	held_item = ""
+	item_active = false
+	battle.display_item()
+
+
+func throw_grenade() -> void:
+	var nade : Grenade = preload("res://Items/grenade.tscn").instantiate()
+	nade.global_position = global_position
+	nade.rotation_degrees = aim.rotation_degrees
+	get_tree().get_root().add_child(nade)
+	
+	battle.itemheld.modulate = Color.WHITE
+	held_item = ""
+	item_active = false
+	battle.display_item()

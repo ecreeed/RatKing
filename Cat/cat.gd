@@ -50,6 +50,8 @@ func _on_animation_animation_finished() -> void:
 	queue_free()
 
 func die() -> void:
+	$hitbox.scale *= 0
+	$Attack.scale *= 0
 	speed = 0
 	anim.play("explosion")
 

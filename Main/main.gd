@@ -16,6 +16,7 @@ var sys : System
 @onready var cheese_bar : ProgressBar = $Canvas/Cheese/Amount
 @onready var cheese_lvl : Label = $Canvas/Cheese/Level
 @onready var pause_menu : PauseMenu = $Pause
+@onready var itemheld : AnimatedSprite2D = $Canvas/Itembox/MarginContainer/ColorRect/ItemHeld
 
 
 func _ready() -> void:
@@ -29,6 +30,7 @@ func _ready() -> void:
 	cheese_lvl.text = "1"
 	pause_menu.battle = self
 	$Death.visible = false
+	display_item()
 
 func _physics_process(delta: float) -> void:
 	set_camera(delta)
@@ -62,9 +64,10 @@ func _on_timer_timeout() -> void:
 	time_cnt.text = str(int(time_cnt.text) + 1)
 	if int(time_cnt.text) % interval == 0:
 		spawn_enemy(int(time_cnt.text)/30 + 1,int(time_cnt.text)/200 + 1)
-	elif int(time_cnt.text) % 2 == 0:
-		spawn_cheese(player.global_position + Vector2(1000,0).rotated(randi_range(0,360)))
-
+	if int(time_cnt.text) % 2 == 0:
+		spawn_cheese(player.global_position + Vector2(1000,0).rotated(randi_range(0,360)),int(time_cnt.text)/300 + 1)
+	if int(time_cnt.text) % 15 == 0:
+		spawn_loot()
 
 func spawn_enemy(count: int, diff: int) -> void:
 	for i in range(count):
@@ -82,6 +85,15 @@ func spawn_cheese(pos: Vector2, level: int=1) -> void:
 	new_cheese.level = level
 	call_deferred("add_child",new_cheese)
 
+
+func spawn_loot() -> void:
+	var itms = ["grenade","ammo","mushroom","cracker"]
+	var new_loot : Loot = preload("res://Items/loot.tscn").instantiate()
+	new_loot.global_position = player.global_position + Vector2(1000,0).rotated(randi_range(0,360))
+	new_loot.item_type = itms.pick_random()
+	call_deferred("add_child",new_loot)
+
+
 func pause(on: bool) -> void:
 	pause_menu.visible = on
 	get_tree().paused = on
@@ -94,8 +106,15 @@ func death() -> void:
 	if player.rats >= 50:
 		score += player.cheese
 	$Death/Score.text = str(score)
-	
 
 
 func _on_menu_pressed() -> void:
 	sys.change_scene("res://Menus/home.tscn")
+
+
+func display_item() -> void:
+	if player.held_item != "":
+		itemheld.play(player.held_item)
+		itemheld.visible = true
+	else:
+		itemheld.visible = false

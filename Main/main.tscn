@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://d2dt7mxbvcbmj"]
+[gd_scene load_steps=20 format=3 uid="uid://d2dt7mxbvcbmj"]
 
 [ext_resource type="Script" path="res://Main/main.gd" id="1_va4l3"]
 [ext_resource type="PackedScene" uid="uid://qivxa54olutt" path="res://Player/player.tscn" id="2_54lp2"]
 [ext_resource type="Theme" uid="uid://mn84i2hymhmy" path="res://UI/Main.tres" id="3_gu3nk"]
 [ext_resource type="Texture2D" uid="uid://c6rixjddqx2xm" path="res://Cheese/cheese.png" id="4_0tkdb"]
+[ext_resource type="Texture2D" uid="uid://riilglivmx4" path="res://Items/Items-Sheet.png" id="5_jwnvl"]
 [ext_resource type="PackedScene" uid="uid://bfd5i32dqiev1" path="res://Menus/pause.tscn" id="5_r0tak"]
 
 [sub_resource type="Gradient" id="Gradient_khaec"]
@@ -33,6 +34,57 @@ bg_color = Color(0.97, 0.55678, 0.2813, 0.2)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_14wer"]
 bg_color = Color(0.996078, 0.905882, 0.380392, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tlp47"]
+atlas = ExtResource("5_jwnvl")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xail7"]
+atlas = ExtResource("5_jwnvl")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wf48e"]
+atlas = ExtResource("5_jwnvl")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b20ia"]
+atlas = ExtResource("5_jwnvl")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ge5ul"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tlp47")
+}],
+"loop": true,
+"name": &"ammo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xail7")
+}],
+"loop": true,
+"name": &"cracker",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wf48e")
+}],
+"loop": true,
+"name": &"grenade",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b20ia")
+}],
+"loop": true,
+"name": &"mushroom",
+"speed": 5.0
+}]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_va4l3")
@@ -156,6 +208,42 @@ theme_override_constants/outline_size = 3
 text = "10"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Itembox" type="ColorRect" parent="Canvas"]
+offset_left = 20.0
+offset_top = 552.0
+offset_right = 60.0
+offset_bottom = 592.0
+scale = Vector2(2, 2)
+color = Color(0.10748, 0.10748, 0.10748, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Canvas/Itembox"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ColorRect" type="ColorRect" parent="Canvas/Itembox/MarginContainer"]
+layout_mode = 2
+color = Color(0.412152, 0.412152, 0.412152, 1)
+
+[node name="ItemHeld" type="AnimatedSprite2D" parent="Canvas/Itembox/MarginContainer/ColorRect"]
+position = Vector2(18, 18)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_ge5ul")
+animation = &"mushroom"
+
+[node name="Label" type="Label" parent="Canvas/Itembox"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("3_gu3nk")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "E"
 
 [node name="Timer" type="Timer" parent="."]
 process_callback = 0

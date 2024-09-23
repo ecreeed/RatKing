@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=3 uid="uid://dcfxkcr7lq2ok"]
+
+[ext_resource type="Script" path="res://Items/loot.gd" id="1_jgtaa"]
+[ext_resource type="Texture2D" uid="uid://riilglivmx4" path="res://Items/Items-Sheet.png" id="2_e66ab"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pft1t"]
+atlas = ExtResource("2_e66ab")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1p5md"]
+atlas = ExtResource("2_e66ab")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_etdhm"]
+atlas = ExtResource("2_e66ab")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wpfed"]
+atlas = ExtResource("2_e66ab")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_msimy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pft1t")
+}],
+"loop": true,
+"name": &"ammo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1p5md")
+}],
+"loop": true,
+"name": &"cracker",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_etdhm")
+}],
+"loop": true,
+"name": &"grenade",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wpfed")
+}],
+"loop": true,
+"name": &"mushroom",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oo0un"]
+
+[node name="Loot" type="Area2D"]
+scale = Vector2(2, 2)
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_jgtaa")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_msimy")
+animation = &"mushroom"
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_oo0un")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

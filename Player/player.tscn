@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://qivxa54olutt"]
+[gd_scene load_steps=5 format=3 uid="uid://qivxa54olutt"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_2rh3y"]
 [ext_resource type="PackedScene" uid="uid://bixxrecohaied" path="res://Player/Gun/gun.tscn" id="2_q0ynm"]
@@ -6,7 +6,11 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_ay2i0"]
 radius = 48.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_jot17"]
+radius = 58.0
+
 [node name="Player" type="CharacterBody2D"]
+z_index = 3
 script = ExtResource("1_2rh3y")
 
 [node name="Art" type="Node2D" parent="."]
@@ -20,3 +24,18 @@ shape = SubResource("CircleShape2D_ay2i0")
 [node name="Gun" parent="Aim" node_paths=PackedStringArray("player") instance=ExtResource("2_q0ynm")]
 position = Vector2(86, 0)
 player = NodePath("../..")
+
+[node name="Pickup" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+priority = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pickup"]
+shape = SubResource("CircleShape2D_jot17")
+
+[node name="ItmTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 10.0
+one_shot = true
+
+[connection signal="timeout" from="ItmTimer" to="." method="_on_itm_timer_timeout"]
